@@ -17,4 +17,29 @@ df = pd.read_excel(
 	nrows = 1000,
 )
 
-st.dataframe(df)
+# st.dataframe(df)
+
+st.sidebar.header("please filter here")
+city = st.sidebar.multiselect(
+	"select the city",
+	options=df["City"].unique(),
+	default=df["City"].unique(),
+)
+
+customer_type = st.sidebar.multiselect(
+	"select the customer type",
+	options=df["Customer_type"].unique(),
+	default=df["Customer_type"].unique(),
+)
+
+gender = st.sidebar.multiselect(
+	"select the Gender",
+	options=df["Gender"].unique(),
+	default=df["Gender"].unique(),
+)
+
+df_selection = df.query(
+	"City == @city & Customer_type == @customer_type & Gender == @gender"
+)
+
+st.dataframe(df_selection)
