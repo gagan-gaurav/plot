@@ -68,3 +68,21 @@ with right_column:
 	st.subheader(f"US $ {average_sale_by_transaction}")
 
 st.markdown("---")
+
+sales_by_product_line = (
+	df_selection.groupby(by = ["Product line"]).sum()[["Total"]].sort_values(by = "Total")
+)
+# st.dataframe(df_selection)
+
+fig_product_sales= px.bar(
+	sales_by_product_line,
+	x = "Total",
+	y = sales_by_product_line.index,
+	orientation = "h",
+	title = "<b> sales by produc line </b>",
+	color_discrete_sequence = ["#0083B8"] * len(sales_by_product_line),
+	template = "plotly_white",
+)
+
+st.plotly_chart(fig_product_sales)
+
